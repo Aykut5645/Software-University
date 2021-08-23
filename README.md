@@ -1,2 +1,2 @@
 # Software-University
-homework assignment
+homework assignments
