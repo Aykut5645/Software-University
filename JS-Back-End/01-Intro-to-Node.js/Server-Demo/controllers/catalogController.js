@@ -1,8 +1,8 @@
 const layout = require("../views/layout");
-const database = require('../util/database');
+const { database } = require('../utils/database');
 
-module.exports = function (req, res) {
-    res.write(layout(html(Object.entries(database.database)), 'Catalog'));
+module.exports = (req, res) => {
+    res.write(layout(html(Object.entries(database)), 'Catalog'));
     res.end();
 }
 

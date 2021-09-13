@@ -1,6 +1,6 @@
 const layout = require("../views/layout");
 
-module.exports = function (req, res) {
+module.exports = (req, res) => {
     res.write(layout(html, 'About'));
     res.end();
 }

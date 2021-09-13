@@ -11,7 +11,7 @@ const deleteController = require('./controllers/deleteController');
 router.get('/', homeController);
 router.get('/about', aboutController);
 router.get('/catalog', catalogController);
-router.get('/delete', deleteController)
+router.get('/delete', deleteController);
 
 router.post('/create', createController);
 

@@ -1,6 +1,6 @@
-const { deleteItem } = require('../util/database');
+const { deleteItem } = require('../utils/database');
 
-module.exports = function (req, res) {
+module.exports = (req, res) => {
     const id = req.url.split('=')[1];
     deleteItem(id);
 
