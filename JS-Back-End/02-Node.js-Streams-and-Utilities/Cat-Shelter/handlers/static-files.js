@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const homeHandler = (req, res) => {
+const staticFiles = (req, res) => {
     const baseUrl = 'http://' + req.headers.host;
     const url = new URL(req.url, baseUrl);
-    const filePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
+    const extname = path.extname(url.pathname);
 
-    if (url.pathname === '/' && req.method === 'GET') {
-        fs.readFile(filePath, (err, data) => {
+    if (url.pathname.startsWith('/content') && req.method === 'GET') {
+        fs.readFile(`.${url.pathname}`, (err, data) => {
             if (err) {
                 res.writeHead(404, {
                     'Content-Type': 'text/plain'
@@ -19,15 +19,24 @@ const homeHandler = (req, res) => {
             }
 
             res.writeHead(200, {
-                'Content-Type': 'text/html'
+                'Content-Type': getMimeTypes(extname)
             });
-
             res.write(data);
             res.end();
         });
-    } else {
-        return true;
     }
 }
 
-module.exports = homeHandler;
+const getMimeTypes = (extname) => {
+    const types = {
+        '.css': 'text/css',
+        '.jpg': 'img/jpg',
+        '.jpeg': 'img/jpeg',
+        '.png': 'img/png'
+    };
+
+    return types[extname];
+}
+
+
+module.exports = staticFiles;
