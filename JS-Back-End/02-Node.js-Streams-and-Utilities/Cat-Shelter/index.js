@@ -5,6 +5,7 @@ const router = require('./router');
 const homeHandler = require('./controllers/home');
 const addBreedHandler = require('./controllers/addBreed');
 const addCatHandler = require('./controllers/addCat');
+const staticFiles = require('./controllers/staticFiles');
 
 router.registerHandler('/', homeHandler);
 router.registerHandler('/add-breed', addBreedHandler);
@@ -17,5 +18,5 @@ http
 function requestHandler(req, res) {
     const currentHandler = router.match(req.url);
 
-    return currentHandler(req, res);
+    currentHandler(req, res);
 }

@@ -1,10 +1,17 @@
+const staticFiles = require('./controllers/staticFiles');
+
 const handlers = {};
 
 function registerHandler(url, handler) {
+    // console.log(url);
     return handlers[url] = handler;
 }
 
 function match(url) {
+    if (url.includes('/content')) {
+        return staticFiles;
+    }
+
     const handler = handlers[url];
 
     if (handler === undefined) {
