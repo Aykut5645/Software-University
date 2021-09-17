@@ -1,22 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const { render } = require("../utils/template");
 
-function addBreedHandler(req, res) {
-    const fullPath = path.resolve('views/addBreed.html');
+async function addBreedHandler(req, res) {
+    const addBreedView = await render('addBreed', 'Add Breed');
 
-    fs.readFile(fullPath, (err, data) => {
-        if (err !== null) {
-            return res.writeHead(404, {
-                'Content-Length': Buffer.byteLength(err.message),
-                'Content-Type': 'text/plain'
-            }).end(err.message);
-        }
-
-        return res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(data),
-            'Content-Type': 'text/html'
-        }).end(data);
-    });
+    return res.writeHead(200, {
+        'Content-Length': Buffer.byteLength(addBreedView),
+        'Content-Type': 'text/html'
+    }).end(addBreedView);
 }
 
 module.exports = addBreedHandler;
