@@ -1,0 +1,80 @@
+html {
+    font-family: 'Monaco';
+    font-size: 18px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: maroon;
+}
+
+#container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: lightgray;
+}
+
+nav::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav a {
+    color: black;
+    float: left;
+    display: block;
+    margin: 0 4px;
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: maroon;
+    color: lightgray;
+}
+
+main {
+    padding: 0 32px;
+}
+
+.info {
+    font-style: italic;
+}
+
+.book {
+    display: block;
+    margin-top: 16px;
+    list-style: none;
+    border: 3px solid maroon;
+    padding: 8px;
+}
+
+.book-title {
+    padding: 8px 16px;
+    display: block;
+}
+
+.book-author {
+    padding: 8px 16px;
+    font-style: italic;
+}
+
+.delete-link {
+    display: block;
+    float: right;
+}
+
+.create-link {
+    color: black;
+    text-decoration: none;
+}
+
+.create-link:hover {
+    background-color: maroon;
+    color: lightgray;
+    margin: 0 4px;
+    padding: 4px 8px;
+}
