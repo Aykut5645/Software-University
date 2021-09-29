@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.12"
+    "formidable": "^1.2.2",
+    "nodemon": "^2.0.12",
+    "uniqid": "^5.4.0"
   }
 }

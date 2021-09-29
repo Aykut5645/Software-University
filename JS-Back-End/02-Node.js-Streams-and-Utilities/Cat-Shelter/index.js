@@ -2,13 +2,16 @@ const http = require('http');
 const port = 3000;
 
 const router = require('./router');
-const homeHandler = require('./controllers/home');
-const addBreedHandler = require('./controllers/addBreed');
-const addCatHandler = require('./controllers/addCat');
+const homeHandler = require('./controllers/homeView');
+const addBreedHandler = require('./controllers/addBreedView');
+const addCatHandler = require('./controllers/addCatView');
 
 router.get('/', homeHandler);
 router.get('/add-breed', addBreedHandler);
 router.get('/add-cat', addCatHandler);
+
+router.post('/add-breed', addBreedHandler);
+router.post('/add-cat', addCatHandler);
 
 http
     .createServer(requestHandler)

@@ -1,22 +1,9 @@
 const path = require('path');
-const { getStaticFiles } = require("../utils/template");
+const { getStaticFiles } = require("../utils/templates");
 
 async function staticFiles(req, res) {
     const static = await getStaticFiles(req);
     const extname = path.extname(req.url);
-    // fs.readFile(fullPath, (err, data) => {
-    //     if (err !== null) {
-    //         return res.writeHead(404, {
-    //             'Content-Length': Buffer.byteLength(err.message),
-    //             'Content-Type': 'text/plain'
-    //         }).end(err.message);
-    //     }
-
-    //     return res.writeHead(200, {
-    //         'Content-Length': Buffer.byteLength(data),
-    //         'Content-Type': getMimeTypes(extname)
-    //     }).end(data);
-    // });
 
     return res.writeHead(200, {
         'Content-Length': Buffer.byteLength(static),

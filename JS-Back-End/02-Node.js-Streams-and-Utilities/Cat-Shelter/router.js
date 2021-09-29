@@ -3,8 +3,12 @@ const staticFiles = require('./controllers/staticFiles');
 const handlers = {};
 
 function registerHandler(method, url, handler) {
-    let methods = handlers[method] || {};
-    handlers[url] = methods;
+    let methods = handlers[url];
+
+    if (methods == undefined) {
+        methods = {};
+        handlers[url] = methods;
+    }
 
     return handlers[url][method] = handler;
 }
