@@ -1,6 +1,12 @@
 const http = require('http');
 const PORT = 3000;
 
+const router = require('./router');
+
+router.get('/', (req, res) => {
+  res.end('HOME PAGE');
+});
+
 http
   .createServer(requestHandler)
   .listen(PORT,
@@ -8,5 +14,7 @@ http
   );
 
 function requestHandler(req, res) {
-  res.end('sdfsadfas');
+  const currentHandler = router.match(req.url);
+
+  currentHandler(req, res);
 }
