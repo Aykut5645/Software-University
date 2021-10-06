@@ -2,10 +2,9 @@ const http = require('http');
 const PORT = 3000;
 
 const router = require('./router');
+const homeController = require('./controllers/homeController');
 
-router.get('/', (req, res) => {
-  res.end('HOME PAGE');
-});
+router.get('/', homeController);
 
 http
   .createServer(requestHandler)
@@ -15,6 +14,5 @@ http
 
 function requestHandler(req, res) {
   const currentHandler = router.match(req.url);
-
   currentHandler(req, res);
 }
