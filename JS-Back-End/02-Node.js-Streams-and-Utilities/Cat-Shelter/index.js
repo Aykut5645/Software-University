@@ -4,9 +4,11 @@ const PORT = 3000;
 const router = require('./router');
 const homeController = require('./controllers/homeController');
 const addBreedController = require('./controllers/addBreedController');
+const addCatController = require('./controllers/addCatController');
 
 router.get('/', homeController);
 router.get('/add-breed', addBreedController);
+router.get('/add-cat', addCatController);
 
 http
   .createServer(requestHandler)
