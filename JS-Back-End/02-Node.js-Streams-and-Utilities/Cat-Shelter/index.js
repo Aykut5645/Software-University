@@ -10,6 +10,8 @@ router.get('/', homeController);
 router.get('/add-breed', addBreedController);
 router.get('/add-cat', addCatController);
 
+router.post('/add-breed', addBreedController);
+
 http
   .createServer(requestHandler)
   .listen(PORT,
