@@ -1,7 +1,7 @@
 const render = require("../utils/templates");
 
-async function homeController(req, res) {
-  const currentView = await render('home');
+async function addBreedController(req, res) {
+  const currentView = await render('addBreed');
 
   return res.writeHead(200, {
     'Content-Length': Buffer.byteLength(currentView),
@@ -9,4 +9,4 @@ async function homeController(req, res) {
   }).end(currentView);
 }
 
-module.exports = homeController;
+module.exports = addBreedController;

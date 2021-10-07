@@ -15,7 +15,7 @@ async function loadTemplates(name) {
   }
 }
 
-async function render(name, title) {
+async function render(name, title = 'Cat Schelter') {
   const [layout, body] = await loadTemplates(name);
 
   return layout

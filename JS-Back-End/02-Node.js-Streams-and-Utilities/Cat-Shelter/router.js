@@ -3,20 +3,19 @@ const staticFiles = require('./controllers/static');
 const handlers = {};
 
 function registerHandler(method, url, handler) {
-  // const methods = {};
-  // methods[method] = handler;
-  // handlers[url] = methods;
-  // console.log(handlers);
-  return handlers[url] = handler;
+  const methods = {};
+  methods[method] = handler;
+  handlers[url] = methods;
+  //console.log(handlers);
 }
 
 function match(method, url) {
   if (method === 'GET' && url.startsWith('/content')) {
     return staticFiles;
   }
-
-  const handler = handlers[url];
-
+  
+  const handler = handlers[url][method];
+  
   if (handler === undefined) {
     return defaultHandler;
   }
