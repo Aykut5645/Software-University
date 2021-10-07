@@ -11,6 +11,7 @@ router.get('/add-breed', addBreedController);
 router.get('/add-cat', addCatController);
 
 router.post('/add-breed', addBreedController);
+router.post('/add-cat', addCatController);
 
 http
   .createServer(requestHandler)

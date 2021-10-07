@@ -13,7 +13,7 @@ async function addBreedController(req, res) {
 }
 
 async function renderAddBreed(req, res) {
-  const currentView = await render('addBreed');
+  const currentView = await render('addBreed', 'Add Breed');
 
   return res.writeHead(200, {
     'Content-Length': Buffer.byteLength(currentView),

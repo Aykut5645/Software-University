@@ -6,16 +6,17 @@ function registerHandler(method, url, handler) {
   const methods = routes[url] || {};
   methods[method] = handler;
   
-  return routes[url] = methods;
+  routes[url] = methods;
 }
 
 function match(method, url) {
   if (method === 'GET' && url.startsWith('/content')) {
     return staticFiles;
   }
-  const handler = routes[url][method] || defaultHandler;
-
-  return handler;
+  const methods = routes[url] || {};
+  const handler = methods[method];
+  
+  return handler || defaultHandler;
 }
 
 function defaultHandler(req, res) {

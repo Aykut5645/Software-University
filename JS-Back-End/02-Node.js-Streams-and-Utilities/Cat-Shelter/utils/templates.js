@@ -15,8 +15,14 @@ async function loadTemplates(name) {
   }
 }
 
-async function render(name, title = 'Cat Schelter') {
-  const [layout, body] = await loadTemplates(name);
+async function render(name, title, data) {
+  let [layout, body] = await loadTemplates(name);
+
+  if (data !== undefined) {
+    body = body
+      .replace('{{cats}}', data)
+      .replace('{{breeds}}', data);
+  }
 
   return layout
     .replace('{{title}}', title)
