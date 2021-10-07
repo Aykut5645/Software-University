@@ -13,6 +13,6 @@ http
   );
 
 function requestHandler(req, res) {
-  const currentHandler = router.match(req.url);
+  const currentHandler = router.match(req.method, req.url);
   currentHandler(req, res);
 }

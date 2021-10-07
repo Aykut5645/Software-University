@@ -1,10 +1,20 @@
+const staticFiles = require('./controllers/static');
+
 const handlers = {};
 
-function registerHandler(url, handler) {
+function registerHandler(method, url, handler) {
+  // const methods = {};
+  // methods[method] = handler;
+  // handlers[url] = methods;
+  // console.log(handlers);
   return handlers[url] = handler;
 }
 
-function match(url) {
+function match(method, url) {
+  if (method === 'GET' && url.startsWith('/content')) {
+    return staticFiles;
+  }
+
   const handler = handlers[url];
 
   if (handler === undefined) {
@@ -23,5 +33,6 @@ function defaultHandler(req, res) {
 
 module.exports = {
   match,
-  get: (...params) => registerHandler(...params) 
+  get: (...params) => registerHandler('GET', ...params), 
+  post: (...params) => registerHandler('POST', ...params), 
 };
