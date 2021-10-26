@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+.container,
+section {
+    display: flex;
+}
+
+.container {
+    max-width: 65vw;
+    margin: 120px auto;
+}
+
+.week {
+    flex-wrap: wrap;
+}
+
+span {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 15px 15px 80px 15px;
+}
+
+.workweek,
+.weekend {
+    flex-basis: 100%;
+}
+
+.workday,
+.restday {
+    flex-grow: 1;
+}
+
+.notes {
+    flex-direction: column;
+}
+
+.reminders, .dates {
+    flex-grow: 1;
+    height: 50%;
+}

@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    margin: 60px auto;
+    max-width: 1400px;
+}
+
+header {
+    border-bottom: 2px solid rgb(0,0,0);
+    display: flex;
+    justify-content: space-between;
+}
+
+header h1 {
+    text-transform: uppercase;
+}
+
+header nav ul {
+    display: flex;
+}
+
+header nav ul li {
+    list-style: none;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: rgb(0, 153, 0);
+    text-decoration: none;
+}
