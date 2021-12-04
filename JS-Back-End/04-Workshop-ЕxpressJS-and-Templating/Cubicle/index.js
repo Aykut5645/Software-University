@@ -17,6 +17,7 @@ const { notFound } = require('./controllers/notFound');
 	}));
 	app.set('view engine', 'hbs');
 	app.use('/static', express.static('static'));
+	app.use(express.urlencoded({ extended: false }));
 	app.use(await storage());
 
 	app.get('/', catalog);

@@ -1,6 +1,10 @@
 module.exports = {
-    catalog: (req, res) => {
-        console.log(req.storage);
-        res.render('index', { title: 'Catalog Cube Page' });
+    catalog: async (req, res) => {
+        const cubes = await req.storage.getAll();
+
+        res.render(
+            'index',
+            { title: 'Catalog Cube Page', cubes }
+        );
     }
 };
