@@ -24,7 +24,7 @@ const { notFound } = require('./controllers/notFound');
 	app.get('/about', about);
 	app.get('/create', getCreate);
 	app.post('/create', postCreate);
-	app.get('/details/:id', details);
+	app.get('/details/:cubeId', details);
 
 	app.all('*', notFound);
 

@@ -4,7 +4,10 @@ module.exports = {
 
         res.render(
             'index',
-            { title: 'Catalog Cube Page', cubes }
+            {
+                title: 'Catalog Cube Page',
+                cubes
+            }
         );
     }
 };
