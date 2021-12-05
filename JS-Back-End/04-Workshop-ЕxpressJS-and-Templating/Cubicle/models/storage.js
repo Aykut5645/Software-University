@@ -20,10 +20,22 @@ const init = async () => {
     };
 };
 
-const getAll = async () => {
-    return Object
+const getAll = async (query) => {
+    let cubes = Object
         .entries(data)
         .map(([id, c]) => Object.assign({}, { id }, c));
+
+    if (query.search) {
+        return cubes.filter(c => c.name.toLowerCase().includes(query.search.toLowerCase()));
+    }
+    if (query.from) {
+        return cubes.filter(c => c.difficultyLevel >= Number(query.from));
+    }
+    if (query.to) {
+        return cubes.filter(c => c.difficultyLevel <= Number(query.to));
+    }
+
+    return cubes;
 };
 
 const getById = async (id) => {
