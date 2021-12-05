@@ -6,7 +6,8 @@ module.exports = {
             'index',
             {
                 title: 'Catalog Cube Page',
-                cubes
+                cubes,
+                ...req.query
             }
         );
     }
