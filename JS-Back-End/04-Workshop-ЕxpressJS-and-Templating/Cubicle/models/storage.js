@@ -26,6 +26,7 @@ const getAll = async (query) => {
         .entries(data)
         .map(([id, c]) => Object.assign({}, { id }, c));
 
+    // filter cubes by query params
     if (query.search) {
         return cubes.filter(c => c.name.toLowerCase().includes(query.search.toLowerCase()));
     }
