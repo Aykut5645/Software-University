@@ -1,15 +1,6 @@
-const uniqid = require('uniqid');
-const fs = require('fs').promises;
-
-let data = {};
+const Cube = require('../models/Cube');
 
 const init = async () => {
-    try {
-        data = JSON.parse(await fs.readFile('./models/data.json'));
-    } catch (error) {
-        console.error('Error reading database!');
-    }
-
     return (req, res, next) => {
         req.storage = {
             getAll,
@@ -22,53 +13,44 @@ const init = async () => {
 };
 
 const getAll = async (query) => {
-    let cubes = Object
-        .entries(data)
-        .map(([id, c]) => Object.assign({}, { id }, c));
+    const cubes = Cube.find({});
 
     // filter cubes by query params
-    if (query.search) {
-        return cubes.filter(c => c.name.toLowerCase().includes(query.search.toLowerCase()));
-    }
-    if (query.from) {
-        return cubes.filter(c => c.difficultyLevel >= Number(query.from));
-    }
-    if (query.to) {
-        return cubes.filter(c => c.difficultyLevel <= Number(query.to));
-    }
+    // if (query.search) {
+    //     return cubes.filter(c => c.name.toLowerCase().includes(query.search.toLowerCase()));
+    // }
+    // if (query.from) {
+    //     return cubes.filter(c => c.difficultyLevel >= Number(query.from));
+    // }
+    // if (query.to) {
+    //     return cubes.filter(c => c.difficultyLevel <= Number(query.to));
+    // }
 
     return cubes;
 };
 
 const getById = async (id) => {
-    const cube = data[id];
+    const cube = await Cube.findById(id).lean();
     if (cube) {
-        return Object.assign({}, { id }, cube);
+        return cube;
     } else {
         return undefined;
     }
 };
 
 const edit = async (id, cube) => {
-    if (!data[id]) {
+    const existingCube = await Cube.findById(id);
+    if (!existingCube) {
         throw new ReferenceError('No such ID in Database!');
     }
 
-    data[id] = cube;
-    await persistData();
+    Object.assign(existingCube, cube);
+    return existingCube.save();
 };
 
 const create = async (cube) => {
-    data[uniqid()] = cube;
-    await persistData();
-};
-
-const persistData = async () => {
-    try {
-        await fs.writeFile('./models/data.json', JSON.stringify(data, null, 4));
-    } catch (error) {
-        console.error('Error writing out database');
-    }
+    const record = new Cube(cube);
+    return record.save();
 };
 
 module.exports = {
