@@ -2,10 +2,9 @@ module.exports = {
     details: async (req, res) => {
         const cube = await req.storage.getById(req.params.cubeId);
         
-        if (cube === undefined) {
+        if (!cube) {
             return res.redirect('404');
         }
-
         res.render(
             'details',
             {

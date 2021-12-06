@@ -5,31 +5,36 @@ const PORT = 3000;
 const { init: storage } = require('./models/storage');
 const { about } = require('./controllers/about');
 const { catalog } = require('./controllers/catalog');
-const { getCreate, postCreate } = require('./controllers/create');
 const { details } = require('./controllers/details');
+const { getCreate, postCreate } = require('./controllers/create');
+const { getEdit, postEdit } = require('./controllers/еdit');
 const { notFound } = require('./controllers/notFound');
 
 (async () => {
-	const app = express();
+    const app = express();
 
-	app.engine('hbs', handlebars({
-		extname: '.hbs'
-	}));
-	app.set('view engine', 'hbs');
-	app.use('/static', express.static('static'));
-	app.use(express.urlencoded({ extended: false }));
-	app.use(await storage());
+    app.engine('hbs', handlebars({
+        extname: '.hbs'
+    }));
+    app.set('view engine', 'hbs');
+    app.use('/static', express.static('static'));
+    app.use(express.urlencoded({ extended: false }));
+    app.use(await storage());
 
-	app.get('/', catalog);
-	app.get('/about', about);
-	app.get('/create', getCreate);
-	app.post('/create', postCreate);
-	app.get('/details/:cubeId', details);
+    app.get('/', catalog);
+    app.get('/about', about);
+    app.get('/details/:cubeId', details);
 
-	app.all('*', notFound);
+    app.get('/create', getCreate);
+    app.post('/create', postCreate);
+    
+    app.get('/edit/:cubeId', getEdit);
+    app.post('/edit/:cubeId', postEdit);
 
-	app.listen(
-		PORT,
-		() => console.log(`Server is listening on port ${PORT}...`)
-	);
+    app.all('*', notFound);
+
+    app.listen(
+        PORT,
+        () => console.log(`Server is listening on port ${PORT}...`)
+    );
 })();
