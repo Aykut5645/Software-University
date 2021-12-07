@@ -1,5 +1,6 @@
 const Cube = require('../models/Cube');
 
+
 const init = async () => {
     return (req, res, next) => {
         req.storage = {
@@ -13,20 +14,21 @@ const init = async () => {
 };
 
 const getAll = async (query) => {
-    const cubes = Cube.find({});
+    const options = {};
 
     // filter cubes by query params
-    // if (query.search) {
-    //     return cubes.filter(c => c.name.toLowerCase().includes(query.search.toLowerCase()));
-    // }
-    // if (query.from) {
-    //     return cubes.filter(c => c.difficultyLevel >= Number(query.from));
-    // }
-    // if (query.to) {
-    //     return cubes.filter(c => c.difficultyLevel <= Number(query.to));
-    // }
+    if (query.search) {
+        options.name = { $regex: query.search, $options: 'i' };
+    }
+    if (query.from) {
+        options.difficultyLevel = { $gte: Number(query.from) };
+    }
+    if (query.to) {
+        options.difficultyLevel = options.difficultyLevel || {};
+        options.difficultyLevel.$lte = Number(query.to);
+    }
 
-    return cubes;
+    return Cube.find(options).lean();
 };
 
 const getById = async (id) => {
