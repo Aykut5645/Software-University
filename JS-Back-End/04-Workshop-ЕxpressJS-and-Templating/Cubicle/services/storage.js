@@ -1,6 +1,5 @@
 const Cube = require('../models/Cube');
 
-
 const init = async () => {
     return (req, res, next) => {
         req.storage = {
@@ -59,5 +58,6 @@ module.exports = {
     init,
     getAll,
     getById,
-    create
+    create,
+    edit
 };
