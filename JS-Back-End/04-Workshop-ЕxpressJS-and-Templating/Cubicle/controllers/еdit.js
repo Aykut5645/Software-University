@@ -30,7 +30,21 @@ module.exports = {
             );
             res.redirect('/');
         } catch (error) {
-            res.redirect('404');
+            if (error.name === 'ValidationError') {
+                res.render('edit', {
+                    title: 'Edit Cube Page',
+                    error: 'All fields are required!',
+                    _id: req.params.cubeId,
+                    ...data
+                });
+            } else if (error.name === 'ReferenceError') {
+                res.render('edit', {
+                    title: 'Edit Cube Page',
+                    error: error.message,
+                    _id: req.params.cubeId,
+                    ...data
+                });
+            }
         }
     }
 };

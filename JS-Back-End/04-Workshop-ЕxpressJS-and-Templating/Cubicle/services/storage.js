@@ -41,6 +41,7 @@ const getById = async (id) => {
 
 const edit = async (id, cube) => {
     const existingCube = await Cube.findById(id);
+    
     if (!existingCube) {
         throw new ReferenceError('No such ID in Database!');
     }

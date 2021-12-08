@@ -9,12 +9,16 @@ module.exports = {
             imageUrl: req.body.imageUrl,
             difficultyLevel: Number(req.body.difficultyLevel)
         };
-        
+
         try {
             await req.storage.create(cube);
+            res.redirect('/');
         } catch (error) {
             if (error.name === 'ValidationError') {
-                res.redirect('/');
+                res.render('create', {
+                    title: 'Create Cube Page',
+                    error: 'All fields are required!'
+                });
             }
         }
     }
