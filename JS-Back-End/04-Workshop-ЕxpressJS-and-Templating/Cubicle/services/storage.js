@@ -1,4 +1,5 @@
 const Cube = require('../models/Cube');
+const Comment = require('../models/Comment');
 
 const init = async () => {
     return (req, res, next) => {
@@ -6,7 +7,8 @@ const init = async () => {
             getAll,
             getById,
             create,
-            edit
+            edit,
+            createComment
         };
         next();
     };
@@ -31,7 +33,7 @@ const getAll = async (query) => {
 };
 
 const getById = async (id) => {
-    const cube = await Cube.findById(id).lean();
+    const cube = await Cube.findById(id).populate('comments').lean();
     if (cube) {
         return cube;
     } else {
@@ -41,7 +43,7 @@ const getById = async (id) => {
 
 const edit = async (id, cube) => {
     const existingCube = await Cube.findById(id);
-    
+
     if (!existingCube) {
         throw new ReferenceError('No such ID in Database!');
     }
@@ -55,10 +57,25 @@ const create = async (cube) => {
     return record.save();
 };
 
+const createComment = async (id, comment) => {
+    const cube = await Cube.findById(id);
+
+    if (!cube) {
+        throw new ReferenceError('No such ID in Database!');
+    }
+
+    const newComment = new Comment(comment);
+    await newComment.save();
+
+    cube.comments.push(newComment);
+    await cube.save();
+};
+
 module.exports = {
     init,
     getAll,
     getById,
     create,
-    edit
+    edit,
+    createComment
 };

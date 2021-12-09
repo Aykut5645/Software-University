@@ -9,11 +9,15 @@ const schema = new Schema({
         required: true,
         match: /^https?:\/\//
     },
-    difficultyLevel: { 
-        type: Number, 
-        min: 1, 
-        max: 6 
+    difficultyLevel: {
+        type: Number,
+        min: 1,
+        max: 6
     },
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
 });
 
 module.exports = new model('Cube', schema);
