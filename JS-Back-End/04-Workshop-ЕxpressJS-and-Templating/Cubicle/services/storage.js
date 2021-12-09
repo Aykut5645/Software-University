@@ -1,5 +1,6 @@
 const Cube = require('../models/Cube');
 const Comment = require('../models/Comment');
+const Accessory = require('../models/Accessory');
 
 const init = async () => {
     return (req, res, next) => {
@@ -8,7 +9,10 @@ const init = async () => {
             getById,
             create,
             edit,
-            createComment
+            createComment,
+            getAllAccessories,
+            createAccessory,
+            attachStricker
         };
         next();
     };
@@ -33,7 +37,10 @@ const getAll = async (query) => {
 };
 
 const getById = async (id) => {
-    const cube = await Cube.findById(id).populate('comments').lean();
+    const cube = await Cube.findById(id)
+        .populate('comments')
+        .populate('accessories')
+        .lean();
     if (cube) {
         return cube;
     } else {
@@ -71,11 +78,35 @@ const createComment = async (id, comment) => {
     await cube.save();
 };
 
+const getAllAccessories = async (existing) => {
+    return await Accessory.find({ _id: { $nin: existing } }).lean();
+};
+
+const createAccessory = async (accessory) => {
+    const record = new Accessory(accessory);
+    return record.save();
+};
+
+const attachStricker = async (cubeId, stickerId) => {
+    const cube = await Cube.findById(cubeId);
+    const sticker = await Accessory.findById(stickerId);
+
+    if (!cube || !sticker) {
+        throw new ReferenceError('No such ID in Database!');
+    }
+
+    cube.accessories.push(sticker);
+    return cube.save();
+};
+
 module.exports = {
     init,
     getAll,
     getById,
     create,
     edit,
-    createComment
+    createComment,
+    getAllAccessories,
+    createAccessory,
+    attachStricker
 };

@@ -1,5 +1,5 @@
 // module.exports = () => {
-//     postComment: async (req, res) => {
+//     postComments: async (req, res) => {
 //         const cubeId = req.params.cubeId;
 //         const comment = {
 //             author: req.body.author,

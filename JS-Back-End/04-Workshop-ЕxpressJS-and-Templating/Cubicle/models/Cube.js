@@ -18,6 +18,10 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
+    accessories: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Accessory'
+    }],
 });
 
 module.exports = new model('Cube', schema);
