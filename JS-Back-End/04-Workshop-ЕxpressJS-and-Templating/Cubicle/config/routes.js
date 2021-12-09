@@ -2,7 +2,7 @@ const { about } = require('../controllers/about');
 const { catalog } = require('../controllers/catalog');
 const { details } = require('../controllers/details');
 const { getCreate, postCreate } = require('../controllers/create');
-const { getEdit, postEdit } = require('../controllers/еdit');
+const { getEdit, postEdit } = require('../controllers/edit');
 const postComments = require('../controllers/comments');
 const { notFound } = require('../controllers/notFound');
 
