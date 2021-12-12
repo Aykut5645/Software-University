@@ -17,11 +17,11 @@ module.exports = () => {
     };
 
     // another approach 
-        /*   
+    /*   
         const storage = Object.assign({}, productService, accessoryService);
         return (req, res, next) => {
             return res.storage = storage;
             next();
-        }
-        */
+    }
+    */
 };
