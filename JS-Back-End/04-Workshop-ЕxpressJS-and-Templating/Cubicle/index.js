@@ -7,8 +7,8 @@ const databaseConfig = require('./config/database');
 (async () => {
     const app = express();
     
-    require('./config/express')(app);
     await databaseConfig(app);
+    require('./config/express')(app);
 
     app.use(await storage());
     require('./config/routes')(app);

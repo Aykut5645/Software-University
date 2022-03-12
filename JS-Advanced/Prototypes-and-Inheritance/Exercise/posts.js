@@ -11,26 +11,49 @@ function solve() {
     }
 
     class SocialMediaPost extends Post {
-        constructor(title, content, likes, disikes) {
+        constructor(title, content, likes, dislikes) {
             super(title, content);
             this.likes = likes;
-            this.disikes = disikes;
-            this.comments = [];
+            this.dislikes = dislikes;
+            this._comments = [];
         }
 
         addComment(comment) {
-            this.comments.push(comment);
+            this._comments.push(comment);
+        }
+
+        get comments() {
+            if (this._comments.length === 0) {
+                return '';
+            }
+            return `Comments:\n * ${this._comments.join('\n * ')}`;
         }
 
         toString() {
-            let commentsResult = (this.comments.length !== 0 && `Comments:\n * ${this.comments.join('\n * ')}`) || '';
-            return (`Post: ${this.title}\nContent: ${this.content}\nRating: ${this.likes} - ${this.disikes}\n${commentsResult}`);
+            return (`Post: ${this.title}\nContent: ${this.content}\nRating: ${this.likes - this.dislikes}\n${this.comments}`);
+        }
+    }
+
+    class BlogPost extends Post {
+        constructor(title, content, views) {
+            super(title, content);
+            this.views = views;
+        }
+
+        view() {
+            this.views += 1;
+            return this;
+        }
+
+        toString() {
+            return `Post: ${this.title}\nContent: ${this.content}\nViews: ${this.views}`;
         }
     }
 
     return {
         Post,
-        SocialMediaPost
+        SocialMediaPost,
+        BlogPost
     };
 }
 
@@ -39,9 +62,6 @@ let post = new classes.Post("Post", "Content");
 
 console.log(post.toString());
 
-// Post: Post
-// Content: Content
-
 let scm = new classes.SocialMediaPost("TestTitle", "TestContent", 25, 30);
 
 scm.addComment("Good post");
@@ -49,11 +69,3 @@ scm.addComment("Very good post");
 scm.addComment("Wow!");
 
 console.log(scm.toString());
-
-// Post: TestTitle
-// Content: TestContent
-// Rating: -5
-// Comments:
-//  * Good post
-//  * Very good post
-//  * Wow!

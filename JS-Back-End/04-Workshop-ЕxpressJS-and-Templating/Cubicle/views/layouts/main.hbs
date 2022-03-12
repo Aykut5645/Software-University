@@ -23,7 +23,12 @@
             </ul>
         </header>
         <main>
+            {{#if error}}
+            <span class="error">{{error}}</span>
+            {{/if}}
+
             {{{body}}}
+        
         </main>
     </div>
     <footer>&copy; Cubicle: Exercise for Express.js and Handlebars</footer>
