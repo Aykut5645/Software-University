@@ -4,6 +4,7 @@ const PORT = 3000;
 
 const catalog = require('./controllers/catalog');
 const about = require('./controllers/about');
+const edit = require('./controllers/edit');
 const create = require('./controllers/create');
 const details = require('./controllers/details');
 const notFound = require('./controllers/notFound');
@@ -25,6 +26,9 @@ const { init: api } = require('./models/storage');
 
     app.get('/create', create.get);
     app.post('/create', create.post);
+
+    app.get('/edit/:id', edit.get);
+    app.post('/edit/:id', edit.post);
 
     app.all('*', notFound.get);
 

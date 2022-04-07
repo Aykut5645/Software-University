@@ -14,7 +14,8 @@ const init = async () => {
         req.api = {
             getAll,
             getById,
-            create
+            create,
+            edit
         };
         next();
     };
@@ -40,22 +41,40 @@ const getAll = (query) => {
 };
 
 const getById = (id) => {
-    return data[id];
+    const cube = data[id];
+    if (cube) {
+        return Object.assign({}, { id }, cube);
+    }
+    return undefined;
 };
 
-const create = async (cube) => {
-    data[uniqid()] = cube;
-
+const persist = async () => {
     try {
         await fs.writeFile('./models/data.json', JSON.stringify(data, null, 4));
     } catch (err) {
         console.error('Error writing out database');
     }
-}
+};
+
+const create = async (cube) => {
+    data[uniqid()] = cube;
+
+    await persist();
+};
+
+const edit = async (id, cube) => {
+    if (!data[id]) {
+        throw new ReferenceError('There is no such ID in database');
+    }
+
+    data[id] = cube;
+    await persist();
+};
 
 module.exports = {
     init,
     getAll,
     getById,
-    create
+    create,
+    edit
 };

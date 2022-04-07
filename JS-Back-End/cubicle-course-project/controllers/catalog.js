@@ -1,7 +1,7 @@
 const catalog = {
     get: async (req, res) => {
         const cubes = await req.api.getAll(req.query);
-
+        
         res.render('catalog', {
             title: 'Cubicle',
             search: req.query.search || '',
