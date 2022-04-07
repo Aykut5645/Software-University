@@ -21,10 +21,10 @@ const { init: api } = require('./models/storage');
 
     app.get('/', catalog.get);
     app.get('/about', about.get);
+    app.get('/details/:id', details.get);
+
     app.get('/create', create.get);
     app.post('/create', create.post);
-
-    app.get('/details/:id', details.get);
 
     app.all('*', notFound.get);
 

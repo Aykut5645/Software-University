@@ -7,7 +7,7 @@ const create = {
             name: req.body.name,
             description: req.body.description,
             imageUrl: req.body.imageUrl,
-            difficultyLevel: req.body.difficultyLevel
+            difficultyLevel: Number(req.body.difficultyLevel)
         };
         await req.api.create(cube);
         res.redirect('/');
