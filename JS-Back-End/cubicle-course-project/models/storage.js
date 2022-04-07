@@ -31,11 +31,11 @@ const getById = (id) => {
     return data[id];
 };
 
-const create = (cube) => {
+const create = async (cube) => {
     data[uniqid()] = cube;
 
     try {
-        fs.writeFile('./models/data.json', JSON.stringify(data));
+        await fs.writeFile('./models/data.json', JSON.stringify(data, null, 4));
     } catch (err) {
         console.error('Error writing out database');
     }

@@ -16,11 +16,14 @@ const { init: api } = require('./models/storage');
     app.set('view engine', 'hbs');
 
     app.use('/static', express.static('static'));
+    app.use(express.urlencoded({ extended: false }));
     app.use(await api());
 
     app.get('/', catalog.get);
     app.get('/about', about.get);
     app.get('/create', create.get);
+    app.post('/create', create.post);
+
     app.get('/details', details.get);
 
     app.all('*', notFound.get);

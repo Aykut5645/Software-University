@@ -2,7 +2,16 @@ const create = {
     get: (req, res) => {
         res.render('create', { title: 'Create Cube Page' });
     },
-    post: (req, res) => { }
+    post: async (req, res) => {
+        let cube = {
+            name: req.body.name,
+            description: req.body.description,
+            imageUrl: req.body.imageUrl,
+            difficultyLevel: req.body.difficultyLevel
+        };
+        await req.api.create(cube);
+        res.redirect('/');
+    }
 };
 
 module.exports = create;
