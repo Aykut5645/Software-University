@@ -24,7 +24,7 @@ const { init: api } = require('./models/storage');
     app.get('/create', create.get);
     app.post('/create', create.post);
 
-    app.get('/details', details.get);
+    app.get('/details/:id', details.get);
 
     app.all('*', notFound.get);
 

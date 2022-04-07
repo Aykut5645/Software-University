@@ -27,7 +27,6 @@ const getAll = () => {
 };
 
 const getById = (id) => {
-    console.log(data[id]);
     return data[id];
 };
 
