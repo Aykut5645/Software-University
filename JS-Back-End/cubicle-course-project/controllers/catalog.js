@@ -1,6 +1,11 @@
 const catalog = {
-    get: (req, res) => {
-        res.render('catalog', { title: 'Cubicle' });
+    get: async (req, res) => {
+        let cubes = await req.api.getAll();
+        
+        res.render('catalog', {
+            title: 'Cubicle',
+            cubes
+        });
     }
 };
 
