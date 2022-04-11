@@ -6,12 +6,12 @@ const Cat = require('./models/Cat');
 (async () => {
     await connect('mongodb://localhost:27017/testdb');
     console.log('Database connected...');
-    
+
     // working with people-db
     await Promise.all([
         new Person({
-            firstName: 'Brad Pitt',
-            lastName: 'Saka',
+            firstName: 'Brad',
+            lastName: 'Pitt',
             age: 22
         }).save(),
         new Person({
@@ -21,21 +21,52 @@ const Cat = require('./models/Cat');
         }).save()
     ]);
 
-    let people = await Person.find({});
+    const people = await Person.find({});
     people.forEach(p => p.getInfo());
     people.forEach(p => p.fullName);
-    
 
     // working with cat-db
-    const newCat = new Cat({
-        name: 'navcho',
-        color: 'orange'
-    });
-    await newCat.save();
+    // await new Cat({
+    //     name: 'navcho',
+    //     color: 'orange'
+    // }).save();
 
-    const cats = await Cat.find({});
-    console.log(cats);
-})().catch(err => {
-    console.error(err.message)
-    console.log('THE END!!!');
-});
+    // finding
+    await Cat.find({});
+    await Cat.find({ age: { $gte: 20 } }); // gte = greater than or equal
+    await Cat.findById('625075b3cab3550b908551d2');
+
+    // this will work inspite of we set enum validator
+    await Cat.updateOne({ name: 'Tom' }, { $set: { color: 'red' } })
+
+    // this will not work because we set validations
+    const currentCat = await Cat.findOne({ name: 'Tom' });
+    currentCat.color = 'red';
+    await currentCat.save();
+
+    Cat.findByIdAndRemove('57fb9fe1853ab747b0f692d1');
+    Cat.remove({ name: 'Tom' });
+    Cat
+        .countDocuments()
+        .then(console.log);
+    Cat
+        .countDocuments({ age: { $gt: 19 } })
+        .then(console.log)
+    // see all the other functions in mongoose documentation...
+
+    // queries
+    Person.find({}).sort({ age: -1 });
+    Person.find({}).sort({ age: -1 }).skip(10).limit(10);
+    Student.find({})
+        .where('firstName').equals('Brad')
+        .where('age').gt(18).lt(65)
+        .sort({ age: -1 })
+        .skip(10)
+        .limit(10);
+    // see all the queries in mongoose documentation...
+
+})()
+    .catch(err => {
+        console.error(err.message)
+        console.log('THE END!!!');
+    });
