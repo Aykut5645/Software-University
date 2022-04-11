@@ -26,10 +26,10 @@ const Cat = require('./models/Cat');
     people.forEach(p => p.fullName);
 
     // working with cat-db
-    // await new Cat({
-    //     name: 'navcho',
-    //     color: 'orange'
-    // }).save();
+    await new Cat({
+        name: 'navcho',
+        color: 'orange'
+    }).save();
 
     // finding
     await Cat.find({});
