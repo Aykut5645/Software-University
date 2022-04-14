@@ -25,4 +25,4 @@ const edit = {
     }
 };
 
-module.exports = edit;+
+module.exports = edit;

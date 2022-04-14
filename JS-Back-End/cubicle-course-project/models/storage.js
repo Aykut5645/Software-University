@@ -58,7 +58,6 @@ const persist = async () => {
 
 const create = async (cube) => {
     data[uniqid()] = cube;
-
     await persist();
 };
 
