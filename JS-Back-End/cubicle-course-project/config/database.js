@@ -5,6 +5,6 @@ module.exports = async (app) => {
         await connect('mongodb://localhost:27017/cubicle');
         console.log('Database connected...');
     } catch (err) {
-        console.error(`Database connection error => ${err.message}`)
+        console.error(`Database connection error => ${err.message}`);
     }
 };

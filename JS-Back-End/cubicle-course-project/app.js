@@ -5,8 +5,8 @@ const PORT = 3000;
     const app = require('express')(); // initialize app
 
     require('./config/express')(app); // configure express
-    app.use(await api());
     await require('./config/database')(app); // configure database (mongoose)
+    app.use(await api());
     require('./config/routes')(app); // configure routes
 
     app.listen(
