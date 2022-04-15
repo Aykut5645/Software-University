@@ -15,26 +15,26 @@ const init = async () => {
 };
 
 const getAll = async (query) => {
-    const cubes = await Cube.find({}).lean();
+    let options = {};
 
     // filter cubes by query param
-    // if (query.search) {
-    //     cubes = cubes.filter(cube => cube.name.toLowerCase().includes(query.search.toLowerCase()));
-    // }
-    // if (query.from) {
-    //     cubes = cubes.filter(cube => cube.difficultyLevel >= Number(query.from));
-    // }
-    // if (query.to) {
-    //     cubes = cubes.filter(cube => cube.difficultyLevel <= Number(query.from));
-    // }
-
-    return cubes;
+    if (query.search) {
+        options.name = { $regex: query.search, $options: 'i' };
+    }
+    if (query.from) {
+        options.difficultyLevel = { $gte: Number(query.from) };
+    }
+    if (query.to) {
+        options.difficultyLevel = options.difficultyLevel || {};
+        options.difficultyLevel.$lte = Number(query.to);
+    };
+    
+    return await Cube.find(options).lean();
 };
 
 const getById = async (id) => {
     if (Types.ObjectId.isValid(id)) { // Error solved => const castError = new CastError();
-        let cube = await Cube.findById(id).lean();
-        return cube;
+        return await Cube.findById(id).lean();
     }
 };
 
