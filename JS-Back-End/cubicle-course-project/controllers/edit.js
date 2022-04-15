@@ -1,11 +1,11 @@
 const edit = {
     get: async (req, res) => {
         let cube = await req.api.getById(req.params.id);
+        if (!cube) {
+            return res.redirect('/404');
+        }
         cube[`select${cube.difficultyLevel}`] = true;
 
-        if (!cube) {
-            return res.redirect('404');
-        }
         res.render('edit', { title: 'Edit Cube Page', ...cube });
     },
     post: async (req, res) => {
@@ -20,7 +20,8 @@ const edit = {
             await req.api.edit(req.params.id, cube);
             res.redirect('/');
         } catch (err) {
-            res.redirect('404');
+            console.error(err.message);
+            res.redirect('/404');
         }
     }
 };

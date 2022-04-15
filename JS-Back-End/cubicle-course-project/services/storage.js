@@ -1,17 +1,8 @@
 const { Types } = require('mongoose');
 
-const fs = require('fs').promises;
 const Cube = require('../models/Cube');
 
-let data = {};
-
 const init = async () => {
-    try {
-        data = JSON.parse(await fs.readFile('./models/data.json'));
-    } catch (err) {
-        console.error('Error reading database');
-    }
-
     return (req, res, next) => {
         req.api = {
             getAll,
@@ -47,25 +38,17 @@ const getById = async (id) => {
     }
 };
 
-const persist = async () => {
-    try {
-        await fs.writeFile('./models/data.json', JSON.stringify(data, null, 4));
-    } catch (err) {
-        console.error('Error writing out database');
-    }
-};
-
 const create = async (cube) => {
     return new Cube(cube).save();
 };
 
 const edit = async (id, cube) => {
-    if (!data[id]) {
+    let existingCube = await Cube.findById(id);
+    if (!existingCube) {
         throw new ReferenceError('There is no such ID in database');
     }
-
-    data[id] = cube;
-    await persist();
+    Object.assign(existingCube, cube);
+    return await existingCube.save();
 };
 
 module.exports = {

@@ -3,10 +3,8 @@ const details = {
         const cube = await req.api.getById(req.params.id);
         if (!cube) {
             return res.redirect('/404');
-        } else {
-
-            res.render('details', { title: 'Details Page', ...cube });
         }
+        res.render('details', { title: 'Details Page', ...cube });
     }
 };
 
