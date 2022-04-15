@@ -1,6 +1,7 @@
 const { Types } = require('mongoose');
 
 const Cube = require('../models/Cube');
+const Comment = require('../models/Comment');
 
 const init = async () => {
     return (req, res, next) => {
@@ -28,17 +29,18 @@ const getAll = async (query) => {
         options.difficultyLevel = options.difficultyLevel || {};
         options.difficultyLevel.$lte = Number(query.to);
     };
-    
+
     return await Cube.find(options).lean();
 };
 
 const getById = async (id) => {
     if (Types.ObjectId.isValid(id)) { // Error solved => const castError = new CastError();
-        return await Cube.findById(id).lean();
+        return await Cube.findById(id).populate('comments').lean();
     }
 };
 
 const create = async (cube) => {
+    console.log(cube);
     return new Cube(cube).save();
 };
 
