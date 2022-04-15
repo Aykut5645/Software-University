@@ -1,4 +1,5 @@
-const uniqid = require('uniqid');
+const { Types } = require('mongoose');
+
 const fs = require('fs').promises;
 const Cube = require('../models/Cube');
 
@@ -39,12 +40,11 @@ const getAll = async (query) => {
     return cubes;
 };
 
-const getById = (id) => {
-    const cube = data[id];
-    if (cube) {
-        return Object.assign({}, { id }, cube);
+const getById = async (id) => {
+    if (Types.ObjectId.isValid(id)) { // Error solved => const castError = new CastError();
+        let cube = await Cube.findById(id).lean();
+        return cube;
     }
-    return undefined;
 };
 
 const persist = async () => {
