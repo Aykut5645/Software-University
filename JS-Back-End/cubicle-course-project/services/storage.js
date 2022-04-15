@@ -9,7 +9,8 @@ const init = async () => {
             getAll,
             getById,
             create,
-            edit
+            edit,
+            createComment
         };
         next();
     };
@@ -45,7 +46,7 @@ const create = async (cube) => {
 };
 
 const edit = async (id, cube) => {
-    let existingCube = await Cube.findById(id);
+    const existingCube = await Cube.findById(id);
     if (!existingCube) {
         throw new ReferenceError('There is no such ID in database');
     }
@@ -53,10 +54,21 @@ const edit = async (id, cube) => {
     return await existingCube.save();
 };
 
+const createComment = async (cubeId, comment) => {
+    const existingCube = await Cube.findById(cubeId);
+    if (!existingCube) {
+        throw new ReferenceError('There is no such ID in database');
+    }
+    const newComment = await new Comment(comment).save();
+    existingCube.comments.push(newComment);
+    await new Cube(existingCube).save();
+};
+
 module.exports = {
     init,
     getAll,
     getById,
     create,
-    edit
+    edit,
+    createComment
 };
