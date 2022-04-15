@@ -237,6 +237,14 @@ footer {
     font-size: 20px;
 }
 
+.error-msg {
+    color: red;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0;
+}
+
 /*Animations & Transitions
 */
 

@@ -19,6 +19,10 @@
             </ul>
         </header>
 
+        {{#if error}}
+        <p class="error-msg">{{error}}</p>
+        {{/if}}
+
         <main>
             {{{body}}}
         </main>

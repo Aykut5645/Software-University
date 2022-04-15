@@ -9,8 +9,15 @@ const create = {
             imageUrl: req.body.imageUrl,
             difficultyLevel: Number(req.body.difficultyLevel)
         };
-        await req.api.create(cube);
-        res.redirect('/');
+        try {
+            await req.api.create(cube);
+            res.redirect('/');
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                return res.render('create', { title: 'Create Cube Page', error: 'All fields are required' });
+            }
+            console.error(err.message);
+        }
     }
 };
 

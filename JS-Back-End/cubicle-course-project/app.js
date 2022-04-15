@@ -6,7 +6,7 @@ const PORT = 3000;
 
     require('./config/express')(app); // configure express
     await require('./config/database')(app); // configure database (mongoose)
-    app.use(await api());
+    app.use(await api()); // set middleware API
     require('./config/routes')(app); // configure routes
 
     app.listen(
