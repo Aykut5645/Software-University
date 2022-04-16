@@ -18,7 +18,6 @@ const getAll = async (query) => {
         options.difficultyLevel = options.difficultyLevel || {};
         options.difficultyLevel.$lte = Number(query.to);
     };
-
     return await Cube.find(options).lean();
 };
 

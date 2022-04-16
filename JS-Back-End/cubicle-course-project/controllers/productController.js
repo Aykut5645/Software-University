@@ -3,7 +3,6 @@ const router = require('express').Router();
 // get catalog
 router.get('/', async (req, res) => {
     let cubes = await req.api.getAll(req.query);
-
     res.render('catalog', {
         title: 'Cubicle',
         search: req.query.search || '',

@@ -1,12 +1,12 @@
-const api = require('./middlewares/api');
+const storage = require('./middlewares/storage');
 const PORT = 3000;
 
 (async () => {
     const app = require('express')(); // initialize app
 
-    require('./config/express')(app); // configure express
     await require('./config/database')(app); // configure database (mongoose)
-    app.use(await api()); // set middleware API
+    require('./config/express')(app); // configure express
+    app.use(await storage()); // set middleware storage
     require('./config/routes')(app); // configure routes
 
     app.listen(

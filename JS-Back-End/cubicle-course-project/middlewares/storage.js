@@ -11,7 +11,7 @@ module.exports = async () => {
             createComment: productService.createComment,
             attachAccessory: productService.attachAccessory,
             createAccessory: accessoryService.createAccessory,
-            getAllAccessories: accessoryService.getAllAccessories,
+            getAllAccessories: accessoryService.getAllAccessories
         };
         next();
     };
