@@ -4,22 +4,6 @@ const Cube = require('../models/Cube');
 const Comment = require('../models/Comment');
 const Accessory = require('../models/Accessory');
 
-const init = async () => {
-    return (req, res, next) => {
-        req.api = {
-            getAll,
-            getById,
-            create,
-            edit,
-            createComment,
-            createAccessory,
-            getAllAccessories,
-            attachAccessory
-        };
-        next();
-    };
-};
-
 const getAll = async (query) => {
     let options = {};
 
@@ -60,24 +44,6 @@ const edit = async (id, cube) => {
     return await existingCube.save();
 };
 
-const createComment = async (cubeId, comment) => {
-    const existingCube = await Cube.findById(cubeId);
-    if (!existingCube) {
-        throw new ReferenceError('There is no such ID in database');
-    }
-    const newComment = await new Comment(comment).save();
-    existingCube.comments.push(newComment);
-    await new Cube(existingCube).save();
-};
-
-const getAllAccessories = async (existing) => {
-    return await Accessory.find({ _id: { $nin: existing } }).lean();
-};
-
-const createAccessory = async (accessory) => {
-    return new Accessory(accessory).save();
-};
-
 const attachAccessory = async (cubeId, accessoryId) => {
     const [existingCube, existingAccessory] = await Promise.all([
         await Cube.findById(cubeId),
@@ -90,14 +56,21 @@ const attachAccessory = async (cubeId, accessoryId) => {
     return existingCube.save();
 };
 
+const createComment = async (cubeId, comment) => {
+    const existingCube = await Cube.findById(cubeId);
+    if (!existingCube) {
+        throw new ReferenceError('There is no such ID in database');
+    }
+    const newComment = await new Comment(comment).save();
+    existingCube.comments.push(newComment);
+    await new Cube(existingCube).save();
+};
+
 module.exports = {
-    init,
     getAll,
     getById,
     create,
     edit,
     createComment,
-    createAccessory,
-    getAllAccessories,
     attachAccessory
 };

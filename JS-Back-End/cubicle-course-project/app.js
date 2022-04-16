@@ -1,4 +1,4 @@
-const { init: api } = require('./services/storage');
+const api = require('./middlewares/api');
 const PORT = 3000;
 
 (async () => {
