@@ -2,6 +2,7 @@ const { Types } = require('mongoose');
 
 const Cube = require('../models/Cube');
 const Comment = require('../models/Comment');
+const Accessory = require('../models/Accessory');
 
 const init = async () => {
     return (req, res, next) => {
@@ -10,7 +11,10 @@ const init = async () => {
             getById,
             create,
             edit,
-            createComment
+            createComment,
+            createAccessory,
+            getAllAccessories,
+            attachAccessory
         };
         next();
     };
@@ -36,12 +40,14 @@ const getAll = async (query) => {
 
 const getById = async (id) => {
     if (Types.ObjectId.isValid(id)) { // Error solved => const castError = new CastError();
-        return await Cube.findById(id).populate('comments').lean();
+        return await Cube.findById(id)
+            .populate('comments')
+            .populate('accessories')
+            .lean();
     }
 };
 
 const create = async (cube) => {
-    console.log(cube);
     return new Cube(cube).save();
 };
 
@@ -64,11 +70,34 @@ const createComment = async (cubeId, comment) => {
     await new Cube(existingCube).save();
 };
 
+const getAllAccessories = async (existing) => {
+    return await Accessory.find({ _id: { $nin: existing } }).lean();
+};
+
+const createAccessory = async (accessory) => {
+    return new Accessory(accessory).save();
+};
+
+const attachAccessory = async (cubeId, accessoryId) => {
+    const [existingCube, existingAccessory] = await Promise.all([
+        await Cube.findById(cubeId),
+        await Accessory.findById(accessoryId)
+    ]);
+    if (!existingCube || !existingAccessory) {
+        throw new ReferenceError('There is no such ID in database');
+    }
+    existingCube.accessories.push(existingAccessory);
+    return existingCube.save();
+};
+
 module.exports = {
     init,
     getAll,
     getById,
     create,
     edit,
-    createComment
+    createComment,
+    createAccessory,
+    getAllAccessories,
+    attachAccessory
 };

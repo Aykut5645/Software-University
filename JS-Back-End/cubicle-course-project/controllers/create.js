@@ -10,8 +10,7 @@ const create = {
             difficultyLevel: Number(req.body.difficultyLevel)
         };
         try {
-            const response = await req.api.create(cube);
-            console.log(response);
+            await req.api.create(cube);
             res.redirect('/');
         } catch (err) {
             if (err.name === 'ValidationError') {

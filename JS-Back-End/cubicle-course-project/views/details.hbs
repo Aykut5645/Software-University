@@ -5,6 +5,17 @@
     <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
     <a class="btn" href="/">Back</a>
     <a class="btn" href="/edit/{{_id}}">Edit</a>
+    <a class="btn" href="/details/{{_id}}/attach">Attach Accessory</a>
+</div>
+<h2>Accessories</h2>
+<div class="accessories">
+    {{#each accessories}}
+    {{> accessory}}
+    {{else}}
+    <h3 class="italic">This cube has no accessories yet. Create the first one:
+        <a href="/accessory/create" style="color: blue">Create</a>
+    </h3>
+    {{/each}}
 </div>
 <div class="details">
     <form action="/comments/{{_id}}/create" method="POST">
