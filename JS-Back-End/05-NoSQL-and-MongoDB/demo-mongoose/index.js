@@ -2,6 +2,8 @@ const { connect } = require('mongoose');
 
 const Person = require('./models/Person');
 const Cat = require('./models/Cat');
+const Post = require('./models/Post');
+const Comment = require('./models/Comment');
 
 (async () => {
     await connect('mongodb://localhost:27017/testdb');
@@ -37,7 +39,7 @@ const Cat = require('./models/Cat');
     await Cat.findById('625075b3cab3550b908551d2');
 
     // this will work inspite of we set enum validator
-    await Cat.updateOne({ name: 'Tom' }, { $set: { color: 'red' } })
+    await Cat.updateOne({ name: 'Tom' }, { $set: { color: 'red' } });
 
     // this will not work because we set validations
     const currentCat = await Cat.findOne({ name: 'Tom' });
@@ -51,7 +53,7 @@ const Cat = require('./models/Cat');
         .then(console.log);
     Cat
         .countDocuments({ age: { $gt: 19 } })
-        .then(console.log)
+        .then(console.log);
     // see all the other functions in mongoose documentation...
 
     // queries
@@ -65,6 +67,27 @@ const Cat = require('./models/Cat');
         .limit(10);
     // see all the queries in mongoose documentation...
 
+    // working with post-db and comments-db
+    // const person = await Person.findOne({});
+    const post = await Post
+        .findOne({})
+        .populate('author')
+        .populate('comments');
+
+    const comment = new Comment({
+        author: post.author,
+        content: 'First Comment',
+    });
+    await comment.save();
+    post.comments.push(comment);
+    await post.save();
+    // const post = new Post({
+    //     title: 'New Post',
+    //     author: person,
+    //     content: 'This is post content'
+    // });
+    // await post.save();
+    console.log(post);
 })()
     .catch(err => {
         console.error(err.message)
