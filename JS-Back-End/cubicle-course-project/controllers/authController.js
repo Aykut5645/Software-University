@@ -9,7 +9,13 @@ router.post('/register', async (req, res) => {
         await req.auth.register(req.body);
         res.redirect('/');
     } catch (err) {
-        res.render('register', { title: 'Register', error: err.message });
+        res.render('register', {
+            title: 'Register',
+            error: err.message,
+            data: {
+                username: req.body.username
+            },
+        });
     }
 });
 
@@ -17,10 +23,19 @@ router.post('/register', async (req, res) => {
 router.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 });
-router.post('/login', (req, res) => {
-    console.log(req.body);
-    res.redirect('/');
+router.post('/login', async (req, res) => {
+    try {
+        await req.auth.login(req.body);
+        res.redirect('/');
+    } catch (err) {
+        res.render('login', {
+            title: 'Login',
+            error: err.message,
+            data: {
+                username: req.body.username
+            },
+        });
+    }
 });
-
 
 module.exports = router;
