@@ -1,5 +1,5 @@
 const storage = require('./middlewares/storage');
-const PORT = 3000;
+const PORT = 5000;
 
 (async () => {
     const app = require('express')(); // initialize app
