@@ -1,17 +1,14 @@
-const { static, urlencoded } = require('express');
+const { urlencoded, static } = require('express');
 const { engine } = require('express-handlebars');
-const cookieParser = require('cookie-parser');
 
-const auth = require('../middlewares/auth');
-
-module.exports = app => {
-    // configure template
-    app.engine('hbs', engine());
+module.exports = (app) => {
+    //TODO: Setup the view engine
+    app.engine('hbs', engine({ extname: '.hbs' }));
     app.set('view engine', 'hbs');
 
-    // middlewares
+    //TODO: Setup the body parser
+    app.use(urlencoded({ extended: true }));
+
+    //TODO: Setup the static files
     app.use('/static', static('static'));
-    app.use(urlencoded({ extended: false }));
-    app.use(cookieParser());
-    app.use(auth());
 };

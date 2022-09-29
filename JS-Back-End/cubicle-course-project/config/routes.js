@@ -1,15 +1,7 @@
-const comments = require('../controllers/comments');
+const dashboardController = require('../controllers/dashboard');
+const cubesController = require('../controllers/cubes');
 
-const homeController = require('../controllers/homeController');
-const authController = require('../controllers/authController');
-const productController = require('../controllers/productController');
-const accessoryController = require('../controllers/accessoryController');
-
-module.exports = app => {
-    app.use('/products', productController);
-    app.use('/accessory', accessoryController);
-    app.use('/auth', authController);
-    app.use('/', homeController);
-
-    app.post('/comments/:cubeId/create', comments.post);
+module.exports = (app) => {
+    app.use('/cubes', cubesController);
+    app.use('/', dashboardController);
 };

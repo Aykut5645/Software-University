@@ -1,31 +1,14 @@
-<h1>{{name}}</h1>
-<img class="cube" src={{imageUrl}}>
+<h1>Gan356 Air SM</h1>
+<img
+  class="cube"
+  src="https://ae01.alicdn.com/kf/HTB1CSddXRxRMKJjy0Fdq6yifFXa6/Gan-356-Air-SM-3x3-Black-Magic-cube-GAN-Air-SM-Magnetic-3x3x3-Speed-cube-gans.jpg"
+/>
 <div class="details">
-    <p><span>Description:</span> {{description}}</p>
-    <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
-    <a class="btn" href="/products">Back</a>
-    <a class="btn" href="/products/edit/{{_id}}">Edit</a>
-    <a class="btn" href="/products//attach/{{_id}}">Attach Accessory</a>
-</div>
-<h2>Accessories</h2>
-<div class="accessories">
-    {{#each accessories}}
-    {{> accessory}}
-    {{else}}
-    <h3 class="italic">This cube has no accessories yet. Create the first one:
-        <a href="/accessory/create" style="color: blue">Create</a>
-    </h3>
-    {{/each}}
-</div>
-<div class="details">
-    <form action="/comments/{{_id}}/create" method="POST">
-        <span>Your Name: <input type="text" name="author"></span>
-        <span>Comment: <textarea name="content" rows="4"></textarea></span>
-        <input type="submit" value="Post Comment">
-    </form>
-    {{#each comments}}
-    {{> comment}}
-    {{else}}
-    <span style="font-stlye: italic; display: inline-block">No comments yet. Be the first one.</span>
-    {{/each}}
+  <p><span>Description:</span>
+    Magnets in AirSM will not drop, and their positions will be more precise
+    with the Magnets-Snap-On design. With the use of 3mm*2mm magnets, the
+    handfeel will be more stable and more comfortable. P.S. This design is brand
+    new for the AirSM.</p>
+  <p><span>Difficulty level:</span> 3</p>
+  <a class="btn" href="/">Back</a>
 </div>
