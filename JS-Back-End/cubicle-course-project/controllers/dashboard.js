@@ -1,7 +1,14 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    res.render('dashboard', { title: 'Cubicle' });
+router.get('/', async (req, res) => {
+    let cubes = [];
+    try {
+        cubes = await req.storage.getAllCubes();
+        console.log(cubes);
+    } catch (err) {
+        console.error(err);
+    }
+    res.render('dashboard', { cubes: cubes });
 });
 router.get('/about', (req, res) => {
     res.render('about', { title: 'About' });
