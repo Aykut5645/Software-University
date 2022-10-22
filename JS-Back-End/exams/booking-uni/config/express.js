@@ -11,6 +11,6 @@ module.exports = (app) => {
     app.use(urlencoded({ extended: true }));
     app.use('/static', static('static')); // TODO: be careful with the paths
     app.use(cookieParser());
-    app.use(auth());
-    app.use(trimBody());
+    app.use(auth);
+    app.use(trimBody);
 };

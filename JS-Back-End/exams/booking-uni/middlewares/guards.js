@@ -1,16 +1,16 @@
-const hasUser = () => (req, res, next) => {
+const hasUser = (req, res, next) => {
     if (req.user) {
         next();
     } else {
-        redirect('/auth/login');
+        res.redirect('/auth/login');
     }
 };
 
-const isGuest = () => (req, res, next) => {
+const isGuest = (req, res, next) => {
     if (!req.user) {
         next();
     } else {
-        redirect('/');
+        res.redirect('/');
     }
 };
 

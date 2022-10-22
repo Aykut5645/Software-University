@@ -5,13 +5,18 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = '5asdfgh5asdfg5asdfg5';
 
 // TODO: look user data (username or email)
-const register = async (username, password) => {
-    const existingUser = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
-    if (existingUser) {
+const register = async (email, username, password) => {
+    const existingEmail = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+    const existingUsername = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
+    if (existingEmail) {
+        throw new Error('Email already exists!');
+    }
+    if (existingUsername) {
         throw new Error('Username already exists!');
     }
     const hashedPassword = await bcrypt.hash(password, 5);
     const user = await User.create({
+        email,
         username,
         hashedPassword
     });
@@ -21,19 +26,21 @@ const register = async (username, password) => {
 };
 
 // TODO: look user data (username or email)
-const login = async (username, password) => {
-    const existingUser = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
+const login = async (email, password) => {
+    const existingUser = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+
     if (
-        !existingUser || !await bcrypt.compare(existingUser.hashedPassword, password)
+        !existingUser || !await bcrypt.compare(password, existingUser.hashedPassword)
     ) {
         throw new Error('Incorrect username or password!');
     }
     return createToken(existingUser);
 };
 
-const createToken = ({ _id, username }) => {
+const createToken = ({ _id, email, username }) => {
     return jwt.sign({
         _id,
+        email,
         username,
     }, JWT_SECRET);
 };
