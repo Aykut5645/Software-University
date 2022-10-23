@@ -1,6 +1,6 @@
 <section id="viewAddhotel">
     <h2>Add new hotel</h2>
-    <form id="formAddhotel">
+    <form id="formAddhotel" method="post" action="/hotel/create">
         <label for="hotel">Hotel name:</label>
         <input type="text" id="hotel" name="hotel" placeholder="Hotel name" />
         <label for="city">City:</label>
@@ -9,7 +9,7 @@
         <input
             type="number"
             id="free-rooms"
-            name="free-rooms"
+            name="freeRooms"
             placeholder="Free rooms"
         />
         <label for="imgUrl">Image:</label>

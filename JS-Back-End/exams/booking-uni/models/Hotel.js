@@ -5,7 +5,7 @@ const schema = new Schema({
     city: { type: String, required: true },
     imageUrl: { type: String, required: true },
     freeRooms: { type: Number, required: true, min: 1, max: 100 },
-    owner: { type: [ObjectId], ref: 'Hotel', required: true }
+    owner: { type: ObjectId, ref: 'Hotel', required: true }
 });
 
 schema.index({ name: 1 }, {

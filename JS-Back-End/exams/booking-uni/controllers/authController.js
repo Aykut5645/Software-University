@@ -25,7 +25,6 @@ router.post('/register', isGuest, async (req, res) => {
         res.redirect('/');
     } catch (error) {
         const errors = parseError(error);
-        console.log(errors);
         res.render('register', {
             title: 'Register',
             errors,
