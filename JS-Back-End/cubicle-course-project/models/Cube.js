@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model, Types: { ObjectId } } = require('mongoose');
 
 const schema = new Schema({
     name: {
@@ -20,7 +20,7 @@ const schema = new Schema({
         min: 1,
         max: 6,
     },
-    accessories: [{ type: Types.ObjectId, ref: 'Accessory' }]
+    accessories: { type: [ObjectId], ref: 'Accessory' }
 });
 
 module.exports = model('Cube', schema);

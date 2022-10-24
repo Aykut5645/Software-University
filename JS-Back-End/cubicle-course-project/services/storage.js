@@ -1,7 +1,7 @@
 const Cube = require('../models/Cube');
 const Accessory = require('../models/Accessory');
 
-const storage = () => (req, res, next) =>  {
+const storage = () => (req, res, next) => {
     req.storage = {
         create,
         getAllCubes
